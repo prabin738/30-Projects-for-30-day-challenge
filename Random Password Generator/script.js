@@ -1,5 +1,6 @@
 const passwordBox = document.getElementById("password");
 const myBtn = document.querySelector("button");
+const CopyPsd = document.getElementById("copy");
 const length = 12; //Password length you can add custom length
 const upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const lowerCase = "abcdefghijklmnopqrstuvwxyz";
@@ -23,3 +24,10 @@ function createPassword() {
 }
 //Eventlistner to track click on generate password
 myBtn.addEventListener("click", createPassword);
+
+//function to copy password
+function copyPassword() {
+  navigator.clipboard.writeText(passwordBox.value);
+}
+
+CopyPsd.addEventListener("click", copyPassword);
