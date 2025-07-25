@@ -1,0 +1,52 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+}
+header {
+  background: #001e3e;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  height: auto;
+}
+.hero-image {
+  padding: 2.5rem 1rem;
+  background-color: #f0f4f8;
+  border-radius: 10px;
+  margin: 0 10px 2rem 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+.hero-image img {
+  width: auto;
+  height: 300px;
+  display: block;
+}
+.hero-image h2 {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+.achievements {
+  padding: 2.5rem 1rem;
+  border-radius: 10px;
+  margin: 0 10px 2rem 10px;
+  border-bottom: 1px solid #e0e0e0;
+  background-color: #f0f4f8;
+  border-bottom: 1px solid #e0e0e0;
+}
+.achievements ul {
+  padding: 2.5rem 1rem;
+}
+
+footer {
+  background: #001e3e;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  height: auto;
+}
