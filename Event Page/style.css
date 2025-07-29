@@ -3,9 +3,19 @@
   padding: 0;
   box-sizing: border-box;
 }
+/* Default Light Mode Styles */
 body {
-  background: #f2f2f2;
+  background-color: white;
+  color: black;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+/* Dark Mode Styles */
+body.dark-mode {
+  background-color: #121212;
+  color: white;
+}
+
 .header {
   background-color: #4db04e;
   display: flex;

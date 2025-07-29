@@ -1,0 +1,101 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #f2f2f2;
+}
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+nav.dark-mode {
+  background-color: #333;
+}
+
+header.dark-mode {
+  background-color: #1a5d1a;
+}
+header {
+  background-color: #4db04e;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+  color: #fff;
+  text-align: center;
+  height: 200px;
+}
+
+header h1,
+header p {
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  background-color: rgb(134, 161, 161);
+  padding: 15px;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.toggle-input {
+  display: none; /* Hide the actual checkbox */
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+.toggle-input:checked + .slider {
+  background-color: #2196f3; /* Color when checked */
+}
+
+.toggle-input:checked + .slider:before {
+  transform: translateX(26px); /* Move the handle when checked */
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}

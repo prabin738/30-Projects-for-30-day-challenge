@@ -1,13 +1,9 @@
 const nextEl = document.querySelector(".next");
-
 const prevEl = document.querySelector(".prev");
-
 const imgsEl = document.querySelectorAll("img");
-
 const imageContainerEl = document.querySelector(".image");
 
 let currentImg = 1;
-
 let timeout;
 
 nextEl.addEventListener("click", () => {
@@ -23,7 +19,6 @@ prevEl.addEventListener("click", () => {
 });
 
 updateImg();
-
 function updateImg() {
   if (currentImg > imgsEl.length) {
     currentImg = 1;
