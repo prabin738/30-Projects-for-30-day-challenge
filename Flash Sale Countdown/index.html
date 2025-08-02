@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flash Sale Countdown</title>
+    <style>
+      /* --- Google Font Import --- */
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap");
+
+      /* --- Main Styles --- */
+      body {
+        background-color: #f0f2f5; /* A light background to see the banner clearly */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        font-family: "Montserrat", sans-serif;
+      }
+
+      .countdown-banner {
+        background-color: #2d2d2d;
+        color: #f5f5f5;
+        text-align: center;
+        padding: 40px 20px;
+        border-radius: 8px;
+        width: 100%;
+        max-width: 960px; /* Max-width from the original image */
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      }
+
+      /* --- Text Styling --- */
+      .flash-sale-title {
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: #f0f0f0;
+        margin: 0 0 10px 0;
+      }
+
+      .flash-sale-title span {
+        color: #ff9800; /* Lightning bolt color */
+      }
+
+      .main-heading {
+        font-size: 2.75rem;
+        font-weight: 800;
+        margin: 0 0 10px 0;
+      }
+
+      .sub-heading {
+        font-size: 1.25rem;
+        font-weight: 400;
+        color: #e0e0e0;
+        margin: 0 0 30px 0;
+      }
+
+      /* --- Timer Styling --- */
+      .timer {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-bottom: 40px;
+      }
+
+      .time-unit {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .time-box {
+        background-color: #fdd835; /* Yellow background for numbers */
+        color: #212121; /* Dark text for contrast */
+        font-size: 3rem;
+        font-weight: 700;
+        padding: 10px 25px;
+        border-radius: 8px;
+        line-height: 1.2;
+        margin-bottom: 8px;
+        min-width: 70px; /* Ensures boxes have same width */
+      }
+
+      .time-label {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #bdbdbd;
+      }
+
+      /* --- Button Styling --- */
+      .cta-button {
+        background-color: #f44336; /* Bright red */
+        color: #ffffff;
+        border: none;
+        border-radius: 5px;
+        padding: 15px 40px;
+        font-size: 1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .cta-button:hover {
+        background-color: #d32f2f; /* Darker red on hover */
+      }
+
+      /* --- Responsive Adjustments --- */
+      @media (max-width: 600px) {
+        .main-heading {
+          font-size: 2rem;
+        }
+        .flash-sale-title,
+        .sub-heading {
+          font-size: 1rem;
+        }
+        .time-box {
+          font-size: 2rem;
+          padding: 10px 15px;
+          min-width: 50px;
+        }
+        .timer {
+          gap: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="countdown-banner">
+      <h4 class="flash-sale-title">
+        <span>⚡</span> Flash sale <span>⚡</span>
+      </h4>
+      <h2 class="main-heading">Only 24 hours</h2>
+      <p class="sub-heading">Up to 20% off on all</p>
+
+      <div class="timer">
+        <div class="time-unit">
+          <div class="time-box" id="hours">23</div>
+          <span class="time-label">Hours</span>
+        </div>
+        <div class="time-unit">
+          <div class="time-box" id="minutes">59</div>
+          <span class="time-label">Minutes</span>
+        </div>
+        <div class="time-unit">
+          <div class="time-box" id="seconds">59</div>
+          <span class="time-label">Seconds</span>
+        </div>
+      </div>
+
+      <button class="cta-button">View More!</button>
+    </div>
+
+    <script>
+      // Set the date we're counting down to: 24 hours from now
+      const countDownDate = new Date().getTime() + 24 * 60 * 60 * 1000;
+
+      // Get the elements to update
+      const hoursElem = document.getElementById("hours");
+      const minutesElem = document.getElementById("minutes");
+      const secondsElem = document.getElementById("seconds");
+
+      // Update the count down every 1 second
+      const countdownFunction = setInterval(function () {
+        // Get today's date and time
+        const now = new Date().getTime();
+
+        // Find the distance between now and the count down date
+        const distance = countDownDate - now;
+
+        // Time calculations for hours, minutes and seconds
+        const hours = Math.floor(
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Add leading zeros if the number is less than 10
+        hoursElem.innerHTML = String(hours).padStart(2, "0");
+        minutesElem.innerHTML = String(minutes).padStart(2, "0");
+        secondsElem.innerHTML = String(seconds).padStart(2, "0");
+
+        // If the count down is over, write some text and stop the timer
+        if (distance < 0) {
+          clearInterval(countdownFunction);
+          document.querySelector(".timer").innerHTML =
+            "<h3 class='main-heading'>SALE EXPIRED</h3>";
+        }
+      }, 1000);
+    </script>
+  </body>
+</html>

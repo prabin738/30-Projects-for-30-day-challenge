@@ -1,0 +1,342 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+body {
+  margin: 0;
+  margin-left: -2%;
+  margin-top: 1%;
+  background-color: #000;
+  color: #eee;
+  font-family: Poppins;
+  font-size: 12px;
+}
+
+/* slider */
+.slider {
+  height: 100vh;
+  margin-top: -50px;
+  width: 100vw;
+  overflow: hidden;
+  position: relative;
+}
+.slider .mainslides .block {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0 0 0 0;
+}
+
+.description {
+  font-size: 16px !important;
+  margin-top: 18px;
+}
+.slider .mainslides .block img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.slider .mainslides .block .content {
+  position: absolute;
+  top: 53%;
+  width: 1140px;
+  max-width: 80%;
+  left: 45%;
+  transform: translateX(-50%);
+  padding-right: 30%;
+  box-sizing: border-box;
+  color: #fff;
+  text-shadow: 0 5px 10px #0004;
+}
+
+.slider .mainslides .block .title,
+.slider .mainslides .block .topic {
+  font-size: 5em;
+  font-weight: bold;
+  line-height: 1.3em;
+}
+.slider .mainslides .block .topic {
+  color: #fff;
+}
+
+.cards .buttons button {
+  margin-top: 4%;
+  background-color: #fff;
+  color: #000;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 24px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.cards .buttons button:hover {
+  color: white;
+  background-color: #333; /* Slightly lighter black on hover */
+}
+
+.cards .block {
+  position: relative;
+  overflow: hidden;
+}
+
+.cards .block img {
+  width: 100%;
+  display: block;
+}
+
+.cards .block::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  transition: background 0.3s ease;
+  border-radius: 20px;
+}
+
+.cards .block:hover::before {
+  background: rgba(0, 0, 0, 0.6); /* Darker overlay on hover */
+}
+
+.mainslides .block {
+  position: relative;
+  overflow: hidden;
+}
+
+.mainslides .block img {
+  width: 100%;
+  display: block;
+}
+
+/* thumbail */
+.cards {
+  position: absolute;
+  bottom: 50px;
+  left: 44%;
+  width: max-content;
+  z-index: 100;
+  display: flex;
+  gap: 20px;
+}
+.cards .block {
+  width: 200px;
+  height: 293px;
+  flex-shrink: 0;
+  position: relative;
+}
+.cards .block img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  border: 2px solid white;
+}
+.cards .block .content {
+  color: #fff;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  text-align: center;
+}
+.cards .block .content .title {
+  font-weight: 500;
+  font-size: 20px;
+}
+.cards .block .content .description {
+  font-weight: 300;
+}
+/* nav */
+.nav {
+  position: absolute;
+  top: 80%;
+  right: 72%;
+  z-index: 100;
+  width: 300px;
+  max-width: 30%;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.nav button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #fff;
+  border: none;
+  color: #000;
+  font-size: 20px;
+  font-family: monospace;
+  font-weight: bold;
+  transition: 0.5s;
+  /* Ensuring text is centered */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav button:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+/* animation */
+.slider .mainslides .block:nth-child(1) {
+  z-index: 1;
+}
+
+/* animation text in first block */
+
+.slider .mainslides .block:nth-child(1) .content .author,
+.slider .mainslides .block:nth-child(1) .content .title,
+.slider .mainslides .block:nth-child(1) .content .topic,
+.slider .mainslides .block:nth-child(1) .content .description,
+.slider .mainslides .block:nth-child(1) .content .buttons {
+  transform: translateY(50px);
+  filter: blur(20px);
+  opacity: 0;
+  animation: showContent 0.5s 1s linear 1 forwards;
+}
+@keyframes showContent {
+  to {
+    transform: translateY(0px);
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
+.slider .mainslides .block:nth-child(1) .content .title {
+  animation-delay: 1.2s !important;
+}
+.slider .mainslides .block:nth-child(1) .content .topic {
+  animation-delay: 1.4s !important;
+}
+.slider .mainslides .block:nth-child(1) .content .description {
+  animation-delay: 1.6s !important;
+}
+.slider .mainslides .block:nth-child(1) .content .buttons {
+  animation-delay: 1.8s !important;
+}
+/* create animation when next click */
+.slider.next .mainslides .block:nth-child(1) img {
+  width: 200px;
+  height: 293px;
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  border-radius: 30px;
+  animation: showImage 0.5s linear 1 forwards;
+  border: 2px solid white;
+}
+@keyframes showImage {
+  to {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
+}
+
+.slider.next .cards .block:nth-last-child(1) {
+  overflow: hidden;
+  animation: showThumbnail 0.5s linear 1 forwards;
+}
+.slider.prev .mainslides .block img {
+  z-index: 100;
+}
+@keyframes showThumbnail {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+}
+.slider.next .cards {
+  animation: effectNext 0.5s linear 1 forwards;
+}
+
+@keyframes effectNext {
+  from {
+    transform: translateX(150px);
+  }
+}
+
+/* running time */
+
+.slider .time {
+  position: absolute;
+  z-index: 1000;
+  width: 0%;
+  height: 3px;
+  background-color: #f1683a;
+  left: 0;
+  top: 0;
+}
+
+.slider.next .time,
+.slider.prev .time {
+  animation: runningTime 3s linear 1 forwards;
+}
+@keyframes runningTime {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0;
+  }
+}
+
+/* prev click */
+
+.slider.prev .mainslides .block:nth-child(2) {
+  z-index: 2;
+}
+
+.slider.prev .mainslides .block:nth-child(2) img {
+  animation: outFrame 0.5s linear 1 forwards;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+@keyframes outFrame {
+  to {
+    width: 200px;
+    height: 293px;
+    bottom: 50px;
+    left: 44%;
+    border-radius: 20px;
+    border: 2px solid white;
+  }
+}
+
+.slider.prev .cards .block:nth-child(1) {
+  overflow: hidden;
+  opacity: 0;
+  animation: showThumbnail 0.5s linear 1 forwards;
+}
+.slider.next .nav button,
+.slider.prev .nav button {
+  pointer-events: none;
+}
+.slider.prev .mainslides .block:nth-child(2) .content .author,
+.slider.prev .mainslides .block:nth-child(2) .content .title,
+.slider.prev .mainslides .block:nth-child(2) .content .topic,
+.slider.prev .mainslides .block:nth-child(2) .content .description,
+.slider.prev .mainslides .block:nth-child(2) .content .buttons {
+  animation: contentOut 1.5s linear 1 forwards !important;
+}
+
+@keyframes contentOut {
+  to {
+    transform: translateY(-150px);
+    filter: blur(20px);
+    opacity: 0;
+  }
+}
+@media screen and (max-width: 678px) {
+  .slider .mainslides .block .content {
+    padding-right: 0;
+  }
+  .slider .mainslides .block .content .title {
+    font-size: 30px;
+  }
+}
