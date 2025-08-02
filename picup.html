@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Picup Media - Submit Order</title>
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome for Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        --primary-color: #48c9b0;
+        --primary-light: #e8f9f6;
+        --primary-border: #b6e9de;
+        --text-dark: #34495e;
+        --text-light: #7f8c8d;
+        --border-color: #ecf0f1;
+        --background-light: #f8f9f9;
+        --white: #ffffff;
+        --disabled-bg: #e5e7e9;
+        --disabled-text: #bdc3c7;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: var(--white);
+        color: var(--text-dark);
+        font-size: 16px;
+      }
+
+      .app-container {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        min-height: 100vh;
+      }
+
+      /* --- Sidebar --- */
+      .sidebar {
+        background-color: var(--background-light);
+        padding: 2rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        border-right: 1px solid var(--border-color);
+      }
+
+      .sidebar-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 2.5rem;
+        color: var(--text-dark);
+      }
+
+      .sidebar-logo i {
+        color: var(--primary-color);
+        background-color: var(--primary-light);
+        padding: 0.5rem;
+        border-radius: 8px;
+      }
+
+      .sidebar-nav ul {
+        list-style: none;
+        flex-grow: 1;
+      }
+
+      .sidebar-nav li {
+        margin-bottom: 0.5rem;
+      }
+
+      .sidebar-nav a {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.8rem 1rem;
+        border-radius: 8px;
+        text-decoration: none;
+        color: var(--text-light);
+        font-weight: 500;
+        transition: all 0.2s ease;
+      }
+
+      .sidebar-nav a:hover {
+        background-color: var(--primary-light);
+        color: var(--text-dark);
+      }
+
+      .sidebar-nav a.active {
+        background-color: var(--primary-light);
+        color: var(--text-dark);
+        font-weight: 600;
+      }
+
+      .sidebar-nav a.active i {
+        color: var(--primary-color);
+      }
+
+      .sidebar-nav i {
+        width: 20px;
+        text-align: center;
+        font-size: 1.1rem;
+      }
+
+      .sidebar-separator {
+        border-top: 1px solid var(--border-color);
+        margin: 1.5rem 0;
+        position: relative;
+      }
+
+      .sidebar-toggle {
+        position: absolute;
+        right: -13px;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: var(--white);
+        border: 1px solid var(--border-color);
+        border-radius: 50%;
+        width: 26px;
+        height: 26px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: var(--text-light);
+      }
+
+      /* --- Main Content --- */
+      .main-content {
+        display: flex;
+        flex-direction: column;
+        background-color: var(--white);
+      }
+
+      .app-header {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 1.5rem 3rem;
+        border-bottom: 1px solid var(--border-color);
+        gap: 2rem;
+      }
+
+      .user-menu div {
+        font-weight: 500;
+        cursor: pointer;
+      }
+
+      .user-menu i {
+        margin-left: 0.5rem;
+        color: var(--text-light);
+      }
+
+      .content-area {
+        flex-grow: 1;
+        padding: 2rem 3rem;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 2rem;
+        align-items: flex-start;
+      }
+
+      .upload-section h1 {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 2rem;
+      }
+
+      .upload-sources {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .upload-source {
+        padding: 1.5rem;
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        text-align: center;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .upload-source:hover {
+        border-color: var(--primary-color);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .upload-source i {
+        color: var(--primary-color);
+        font-size: 1.5rem;
+        margin-right: 0.75rem;
+      }
+
+      /* --- Drop Zone --- */
+      .drop-zone {
+        border: 2px dashed var(--primary-border);
+        background-color: var(--primary-light);
+        border-radius: 12px;
+        padding: 4rem 2rem;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      }
+
+      .drop-zone.dragover {
+        background-color: #d1f2eb;
+        border-color: var(--primary-color);
+      }
+
+      .drop-zone-icon {
+        font-size: 2.5rem;
+        color: var(--primary-color);
+      }
+
+      .drop-zone p {
+        font-weight: 500;
+        margin-top: 1rem;
+      }
+
+      .drop-zone span {
+        color: var(--text-light);
+        font-weight: 500;
+        margin: 0.5rem 0 1.5rem 0;
+      }
+
+      .select-images-btn {
+        background-color: var(--primary-color);
+        color: var(--white);
+        border: none;
+        padding: 0.8rem 2rem;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+      }
+
+      .select-images-btn:hover {
+        background-color: #3abda3;
+      }
+
+      .file-info {
+        margin-top: 1.5rem;
+        color: var(--text-light);
+        font-size: 0.9rem;
+      }
+
+      #file-input {
+        display: none;
+      }
+
+      /* --- Order Details Sidebar --- */
+      .order-details {
+        border: 1px solid var(--primary-border);
+        border-radius: 12px;
+        padding: 1.5rem;
+        background-color: var(--white);
+      }
+
+      .order-details h2 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+      }
+
+      .spec-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .spec-header h3 {
+        font-size: 1rem;
+        font-weight: 500;
+      }
+
+      .spec-header a {
+        font-size: 0.9rem;
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .spec-item {
+        display: flex;
+        align-items: center;
+        background-color: var(--background-light);
+        padding: 0.8rem;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+        margin-bottom: 1rem;
+        color: var(--text-light);
+      }
+
+      .spec-item span {
+        flex-grow: 1;
+      }
+
+      .spec-item i {
+        cursor: pointer;
+      }
+
+      .order-details textarea {
+        width: 100%;
+        height: 80px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 0.8rem;
+        font-family: "Poppins", sans-serif;
+        resize: none;
+        margin-bottom: 1.5rem;
+      }
+
+      .order-details textarea::placeholder {
+        color: #bdc3c7;
+      }
+
+      .checkout-section h3 {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+
+      .checkout-item,
+      .checkout-total {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.8rem;
+        font-size: 0.95rem;
+      }
+
+      .checkout-item span:first-child,
+      .coupon-code-group label {
+        color: var(--text-light);
+      }
+
+      .checkout-item span:last-child,
+      .checkout-total span:last-child {
+        font-weight: 600;
+      }
+
+      .checkout-total {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border-color);
+      }
+
+      .coupon-code-group {
+        margin-top: 1.5rem;
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .coupon-code-group input {
+        flex-grow: 1;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 0.7rem;
+        font-family: "Poppins", sans-serif;
+      }
+
+      .coupon-code-group input::placeholder {
+        color: #bdc3c7;
+      }
+
+      .apply-btn {
+        border: 1px solid var(--primary-border);
+        background-color: var(--primary-light);
+        color: var(--primary-color);
+        padding: 0 1.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .apply-btn:hover {
+        background-color: #d1f2eb;
+      }
+
+      .confirm-btn {
+        width: 100%;
+        background-color: var(--primary-color);
+        color: var(--white);
+        border: none;
+        padding: 1rem;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 2rem;
+        transition: background-color 0.2s ease;
+      }
+
+      .confirm-btn:disabled {
+        background-color: #e0e8e7;
+        color: #a8b8b5;
+        cursor: not-allowed;
+      }
+
+      .view-details-link {
+        display: block;
+        text-align: center;
+        margin-top: 1rem;
+        color: var(--text-light);
+        text-decoration: none;
+        font-size: 0.9rem;
+      }
+
+      /* --- Responsive Design --- */
+      @media (max-width: 1200px) {
+        .content-area {
+          grid-template-columns: 1fr;
+        }
+        .order-details {
+          margin-top: 2rem;
+        }
+      }
+
+      @media (max-width: 992px) {
+        .app-container {
+          grid-template-columns: 1fr;
+        }
+        .sidebar {
+          display: none; /* Hide sidebar on smaller screens */
+        }
+        .app-header {
+          padding: 1rem 1.5rem;
+        }
+        .content-area {
+          padding: 1.5rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .upload-sources {
+          grid-template-columns: 1fr;
+        }
+        .app-header {
+          flex-direction: column;
+          align-items: flex-end;
+          gap: 0.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Sidebar Navigation -->
+      <nav class="sidebar">
+        <div class="sidebar-logo">
+          <i class="fa-solid fa-play"></i>
+          <span>Picup Media</span>
+        </div>
+        <div class="sidebar-nav">
+          <ul>
+            <li>
+              <a href="#" class="active"
+                ><i class="fa-solid fa-pen-to-square"></i> Submit Order</a
+              >
+            </li>
+            <li>
+              <a href="#"><i class="fa-regular fa-file-lines"></i> My Orders</a>
+            </li>
+            <li>
+              <a href="#"><i class="fa-solid fa-bag-shopping"></i> Shop</a>
+            </li>
+          </ul>
+          <div class="sidebar-separator">
+            <div class="sidebar-toggle">
+              <i class="fa-solid fa-chevron-left"></i>
+            </div>
+          </div>
+          <ul>
+            <li>
+              <a href="#"><i class="fa-regular fa-user"></i> Account</a>
+            </li>
+            <li>
+              <a href="#"
+                ><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</a
+              >
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- Main Content Area -->
+      <div class="main-content">
+        <!-- Header -->
+        <header class="app-header">
+          <div class="user-menu">
+            <div>
+              20.0 credits available <i class="fa-solid fa-caret-down"></i>
+            </div>
+          </div>
+          <div class="user-menu">
+            <div>Hi, Kajal Naina! <i class="fa-solid fa-caret-down"></i></div>
+          </div>
+        </header>
+
+        <!-- Content -->
+        <main class="content-area">
+          <div class="upload-section">
+            <h1>Upload your images</h1>
+
+            <div class="upload-sources">
+              <div class="upload-source">
+                <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                <span>Upload from Computer</span>
+              </div>
+              <div class="upload-source">
+                <i class="fa-brands fa-dropbox"></i>
+                <span>Upload from Dropbox</span>
+              </div>
+            </div>
+
+            <div class="drop-zone" id="drop-zone">
+              <input type="file" id="file-input" multiple />
+              <i class="fa-solid fa-arrow-up-from-bracket drop-zone-icon"></i>
+              <p>Drop files here to upload</p>
+              <span>OR</span>
+              <button class="select-images-btn" id="select-images-btn">
+                SELECT IMAGES
+              </button>
+              <div class="file-info">
+                Max file size: 25 MB <br />
+                TIF, TIFF, PSD, HEIC, JPG, JPEG and PNG
+              </div>
+            </div>
+          </div>
+
+          <!-- Order Details Sidebar -->
+          <aside class="order-details">
+            <h2>Your order details</h2>
+
+            <div class="spec-header">
+              <h3>Your image specifications</h3>
+              <a href="#">View</a>
+            </div>
+            <div class="spec-item">
+              <span>Transparent background with shadow</span>
+              <i class="fa-solid fa-pencil"></i>
+            </div>
+            <textarea placeholder="Add additional instructions..."></textarea>
+
+            <div class="checkout-section">
+              <h3>Checkout</h3>
+              <div class="checkout-item">
+                <span>Uploaded files</span>
+                <span>0</span>
+              </div>
+              <div class="checkout-item">
+                <span>Price per image</span>
+                <span>1 credit</span>
+              </div>
+              <div class="checkout-total">
+                <span>Total:</span>
+                <span>0 credits</span>
+              </div>
+            </div>
+
+            <div class="coupon-code-group">
+              <input type="text" placeholder="Enter here" />
+              <button class="apply-btn">APPLY</button>
+            </div>
+
+            <button class="confirm-btn" disabled>CONFIRM</button>
+
+            <a href="#" class="view-details-link">View order details</a>
+          </aside>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      const dropZone = document.getElementById("drop-zone");
+      const fileInput = document.getElementById("file-input");
+      const selectImagesBtn = document.getElementById("select-images-btn");
+
+      // Trigger file input when "SELECT IMAGES" button is clicked
+      selectImagesBtn.addEventListener("click", () => {
+        fileInput.click();
+      });
+
+      // Trigger file input when the drop zone is clicked (excluding button)
+      dropZone.addEventListener("click", (e) => {
+        if (
+          e.target !== selectImagesBtn &&
+          !selectImagesBtn.contains(e.target)
+        ) {
+          fileInput.click();
+        }
+      });
+
+      // Add 'dragover' class when a file is dragged over the drop zone
+      dropZone.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        dropZone.classList.add("dragover");
+      });
+
+      // Remove 'dragover' class when the file leaves the drop zone
+      dropZone.addEventListener("dragleave", (e) => {
+        e.preventDefault();
+        dropZone.classList.remove("dragover");
+      });
+
+      // Handle the file drop
+      dropZone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        dropZone.classList.remove("dragover");
+        const files = e.dataTransfer.files;
+        if (files.length) {
+          fileInput.files = files;
+          // You can add further logic here to handle the uploaded files
+          console.log("Files dropped:", files);
+        }
+      });
+
+      // Handle file selection via the file input dialog
+      fileInput.addEventListener("change", () => {
+        if (fileInput.files.length) {
+          // You can add further logic here to handle the selected files
+          console.log("Files selected:", fileInput.files);
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+.wheel-container {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  margin: 50px auto;
+  border-radius: 50%;
+  overflow: hidden; /* Ensures segments don't overflow */
+}
+
+#luckyWheel {
+  display: block; /* Removes extra space below canvas */
+  transform-origin: center center; /* Sets pivot point for rotation */
+  transition: transform 4s ease-out; /* Smooth spinning animation */
+}
+
+.pointer {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 30px solid red; /* Creates a triangular pointer */
+  z-index: 10;
+}
+
+#spinBtn {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  cursor: pointer;
+}
