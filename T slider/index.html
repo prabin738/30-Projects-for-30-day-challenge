@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customer Reviews Slider</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <section class="review-slider-section">
+      <h2>What Our Customers Say</h2>
+      <div class="slider-container">
+        <div class="slider-wrapper">
+          <div class="slider-track">
+            <!-- INSTRUCTIONS: Add your 8 review images here -->
+            <div class="review-slide">
+              <img src="https://i.imgur.com/k6KXr3L.png" alt="Review 1" />
+            </div>
+            <div class="review-slide">
+              <img
+                src="https://placehold.co/1080x1350/333333/FFFFFF/png?text=Review+2"
+                alt="Review 2"
+              />
+            </div>
+            <div class="review-slide">
+              <img
+                src="https://placehold.co/1080x1350/E89D63/FFFFFF/png?text=Review+3"
+                alt="Review 3"
+              />
+            </div>
+            <div class="review-slide">
+              <img
+                src="https://placehold.co/1080x1350/63A3E8/FFFFFF/png?text=Review+4"
+                alt="Review 4"
+              />
+            </div>
+            <div class="review-slide">
+              <img
+                src="https://placehold.co/1080x1350/E86363/FFFFFF/png?text=Review+5"
+                alt="Review 5"
+              />
+            </div>
+            <div class="review-slide">
+              <img
+                src="https://placehold.co/1080x1350/63E8B4/FFFFFF/png?text=Review+6"
+                alt="Review 6"
+              />
+            </div>
+            <div class="review-slide">
+              <img
+                src="https://placehold.co/1080x1350/C863E8/FFFFFF/png?text=Review+7"
+                alt="Review 7"
+              />
+            </div>
+            <div class="review-slide">
+              <img
+                src="https://placehold.co/1080x1350/E8E263/FFFFFF/png?text=Review+8"
+                alt="Review 8"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <button class="slider-btn prev">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 320 512"
+            fill="currentColor"
+          >
+            <path
+              d="M224 480c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25l192-192c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25L77.25 256l169.4 169.4c12.5 12.5 12.5 32.75 0 45.25C240.4 476.9 232.2 480 224 480z"
+            />
+          </svg>
+        </button>
+        <button class="slider-btn next">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 320 512"
+            fill="currentColor"
+          >
+            <path
+              d="M96 480c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Pagination Dots -->
+      <div class="slider-dots"></div>
+    </section>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const track = document.querySelector(".slider-track");
+        const slides = Array.from(track.children);
+        const nextButton = document.querySelector(".next");
+        const prevButton = document.querySelector(".prev");
+        const dotsNav = document.querySelector(".slider-dots");
+
+        let currentIndex = 0;
+
+        // Function to determine slides to show based on window width
+        const getSlidesToShow = () => {
+          if (window.innerWidth >= 1024) return 3;
+          if (window.innerWidth >= 768) return 2;
+          return 1;
+        };
+
+        const totalSlides = slides.length;
+
+        // --- Create Dots ---
+        // The logic for dot creation is based on pages/steps, not individual slides
+        const createDots = () => {
+          dotsNav.innerHTML = ""; // Clear existing dots
+          const slidesToShow = getSlidesToShow();
+          const numDots =
+            totalSlides > slidesToShow ? totalSlides - slidesToShow + 1 : 1;
+
+          if (numDots <= 1) return; // Don't show dots if everything is visible
+
+          for (let i = 0; i < numDots; i++) {
+            const dot = document.createElement("button");
+            dot.classList.add("dot");
+            dot.addEventListener("click", () => {
+              moveToSlide(i);
+            });
+            dotsNav.appendChild(dot);
+          }
+        };
+
+        const dots = () => Array.from(dotsNav.children);
+
+        const moveToSlide = (index) => {
+          const slidesToShow = getSlidesToShow();
+
+          // Boundary check
+          const maxIndex = totalSlides - slidesToShow;
+          if (index > maxIndex) {
+            index = maxIndex;
+          }
+          if (index < 0) {
+            index = 0;
+          }
+
+          const slideWidth = slides[0].getBoundingClientRect().width;
+          track.style.transform = `translateX(-${index * slideWidth}px)`;
+          currentIndex = index;
+          updateNav();
+        };
+
+        const updateNav = () => {
+          const slidesToShow = getSlidesToShow();
+
+          // Update dots
+          const currentDots = dots();
+          currentDots.forEach((dot) => dot.classList.remove("active"));
+          if (currentDots[currentIndex]) {
+            currentDots[currentIndex].classList.add("active");
+          }
+
+          // Update buttons
+          prevButton.disabled = currentIndex === 0;
+          nextButton.disabled = currentIndex >= totalSlides - slidesToShow;
+        };
+
+        // --- Event Listeners ---
+        nextButton.addEventListener("click", () => {
+          moveToSlide(currentIndex + 1);
+        });
+
+        prevButton.addEventListener("click", () => {
+          moveToSlide(currentIndex - 1);
+        });
+
+        // --- Responsive Handling ---
+        window.addEventListener("resize", () => {
+          createDots();
+          moveToSlide(currentIndex);
+        });
+
+        // --- Initial Setup ---
+        createDots();
+        moveToSlide(0);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sticky Countdown Banner</title>
+    <style>
+      /* --- Google Font Import --- */
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap");
+
+      /* --- Main Body and Dummy Content for Scrolling --- */
+      body {
+        font-family: "Montserrat", sans-serif;
+        background-color: #f0f2f5;
+        margin: 0;
+        padding-bottom: 120px; /* Add padding to the bottom so the banner doesn't cover content */
+        line-height: 1.6;
+      }
+
+      .dummy-content {
+        padding: 20px;
+        max-width: 800px;
+        margin: 20px auto;
+      }
+
+      /* --- Sticky Banner Styles --- */
+      .sticky-banner {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #2d2d2d;
+        color: #f5f5f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 15px 50px; /* Add padding for space around content and close button */
+        box-sizing: border-box;
+        z-index: 1000;
+        box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+        transition: transform 0.4s ease-in-out, opacity 0.4s ease;
+      }
+
+      /* Class to hide the banner */
+      .sticky-banner.hidden {
+        transform: translateY(100%);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .banner-content-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 25px;
+        flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+      }
+
+      /* --- Text Styling --- */
+      .banner-text {
+        text-align: left;
+      }
+
+      .flash-sale-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin: 0;
+        white-space: nowrap;
+      }
+
+      .flash-sale-title span {
+        color: #ff9800; /* Lightning bolt color */
+      }
+
+      .discount-subtitle {
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: #bdbdbd;
+        margin: 2px 0 0 0;
+        text-transform: uppercase;
+      }
+
+      /* --- Timer Styling (compact version) --- */
+      .timer {
+        display: flex;
+        align-items: flex-end; /* Align to the bottom for a cleaner look */
+        gap: 10px;
+      }
+
+      .time-unit {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .time-box {
+        background-color: #fdd835;
+        color: #212121;
+        font-size: 1.5rem;
+        font-weight: 700;
+        padding: 5px 10px;
+        border-radius: 4px;
+        line-height: 1.2;
+        margin-bottom: 4px;
+        min-width: 35px;
+        text-align: center;
+      }
+
+      .time-label {
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: #bdbdbd;
+        text-transform: uppercase;
+      }
+
+      /* --- Close Button Styling --- */
+      .close-btn {
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: #aaa;
+        font-size: 24px;
+        font-weight: bold;
+        line-height: 1;
+        cursor: pointer;
+        padding: 5px;
+        transition: color 0.3s ease;
+      }
+
+      .close-btn:hover {
+        color: #fff;
+      }
+
+      /* --- Responsive Adjustments --- */
+      @media (max-width: 768px) {
+        .sticky-banner {
+          padding: 15px;
+        }
+        .banner-content-wrapper {
+          gap: 15px;
+        }
+        .flash-sale-title {
+          font-size: 1rem;
+        }
+        .discount-subtitle {
+          font-size: 0.7rem;
+        }
+        .close-btn {
+          right: 10px;
+        }
+      }
+      @media (max-width: 480px) {
+        .banner-text {
+          /* On very small screens, center the text for a better look when it wraps */
+          text-align: center;
+          flex-basis: 100%; /* Make it take full width */
+          margin-bottom: 10px;
+        }
+        .banner-content-wrapper {
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dummy-content">
+      <h1>Page Content</h1>
+      <p>
+        This is some dummy content to demonstrate the sticky banner. Scroll down
+        the page to see the banner remain fixed at the bottom of the screen.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec
+        odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla
+        quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent
+        mauris. Fusce nec tellus sed augue semper porta. Mauris massa.
+        Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad
+        litora torquent per conubia nostra, per inceptos himenaeos. Curabitur
+        sodales ligula in libero.
+      </p>
+      <p>
+        Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean
+        quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis
+        tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus
+        risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis
+        quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus,
+        ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat
+        condimentum velit.
+      </p>
+      <p>
+        Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
+        inceptos himenaeos. Nam nec ante. Sed lacinia, urna non tincidunt
+        mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis.
+        Nulla facilisi. Ut fringilla. Suspendisse potenti. Nunc feugiat mi a
+        tellus consequat imperdiet. Vestibulum sapien. Proin quam. Etiam
+        ultrices. Suspendisse in justo eu magna luctus suscipit.
+      </p>
+      <p>
+        Sed lectus. Integer euismod lacus luctus magna. Quisque cursus, metus
+        vitae pharetra auctor, sem massa mattis sem, at interdum magna augue
+        eget diam. Vestibulum ante ipsum primis in faucibus orci luctus et
+        ultrices posuere cubilia Curae; Morbi lacinia molestie dui. Praesent
+        blandit dolor. Sed non quam. In vel mi sit amet augue congue elementum.
+        Morbi in ipsum sit amet pede facilisis laoreet. Donec lacus nunc,
+        viverra nec, blandit vel, egestas et, augue. Vestibulum tincidunt
+        malesuada tellus. Ut ultrices ultrices enim. Curabitur sit amet mauris.
+        Morbi in dui quis est pulvinar ullamcorper.
+      </p>
+    </div>
+
+    <div class="sticky-banner" id="sticky-sale-banner">
+      <div class="banner-content-wrapper">
+        <div class="banner-text">
+          <p class="flash-sale-title"><span>⚡</span> Flash sale</p>
+          <p class="discount-subtitle">UP to 20% off</p>
+        </div>
+        <div class="timer">
+          <div class="time-unit">
+            <div class="time-box" id="hours">23</div>
+            <span class="time-label">Hours</span>
+          </div>
+          <div class="time-unit">
+            <div class="time-box" id="minutes">59</div>
+            <span class="time-label">Minutes</span>
+          </div>
+          <div class="time-unit">
+            <div class="time-box" id="seconds">47</div>
+            <span class="time-label">Seconds</span>
+          </div>
+        </div>
+      </div>
+      <button class="close-btn" id="close-banner-btn" aria-label="Close Banner">
+        ×
+      </button>
+    </div>
+
+    <script>
+      // --- Countdown Timer Logic ---
+      const countDownDate = new Date().getTime() + 24 * 60 * 60 * 1000;
+
+      const hoursElem = document.getElementById("hours");
+      const minutesElem = document.getElementById("minutes");
+      const secondsElem = document.getElementById("seconds");
+
+      const countdownFunction = setInterval(function () {
+        const now = new Date().getTime();
+        const distance = countDownDate - now;
+
+        if (distance < 0) {
+          clearInterval(countdownFunction);
+          document.querySelector(".banner-content-wrapper").innerHTML =
+            "<p class='flash-sale-title'>SALE EXPIRED</p>";
+          return;
+        }
+
+        const hours = Math.floor(
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        hoursElem.innerHTML = String(hours).padStart(2, "0");
+        minutesElem.innerHTML = String(minutes).padStart(2, "0");
+        secondsElem.innerHTML = String(seconds).padStart(2, "0");
+      }, 1000);
+
+      // --- Close Button Logic ---
+      const banner = document.getElementById("sticky-sale-banner");
+      const closeBtn = document.getElementById("close-banner-btn");
+
+      closeBtn.addEventListener("click", () => {
+        banner.classList.add("hidden");
+      });
+    </script>
+  </body>
+</html>

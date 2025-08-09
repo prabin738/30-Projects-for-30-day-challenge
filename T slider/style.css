@@ -1,0 +1,146 @@
+/* --- Global Styles & Variables --- */
+:root {
+  --background-color: #f4f6f9;
+  --text-color: #1a1a1a;
+  --primary-color: #007bff;
+  --card-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+  --card-border-radius: 12px;
+  --transition-speed: 0.5s;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  margin: 0;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* --- Main Section --- */
+.review-slider-section {
+  width: 100%;
+  max-width: 1200px;
+  padding: 4rem 1rem;
+  box-sizing: border-box;
+}
+
+.review-slider-section h2 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 0 0 3rem 0;
+}
+
+/* --- Slider Core Structure --- */
+.slider-container {
+  position: relative;
+  width: 100%;
+  padding: 0 50px; /* Space for the arrows */
+  box-sizing: 3 px solid green;
+}
+
+.slider-wrapper {
+  overflow: hidden;
+  width: 100%;
+}
+
+.slider-track {
+  display: flex;
+  transition: transform var(--transition-speed) cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.review-slide {
+  flex: 0 0 100%; /* Mobile first: 1 slide visible */
+  box-sizing: border-box;
+  padding: 0 10px; /* Creates a gap between slides */
+}
+
+.review-slide img {
+  width: 100%;
+  display: block;
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--card-shadow);
+  object-fit: cover;
+}
+
+/* --- Navigation Arrows --- */
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.slider-btn:hover:not(:disabled) {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: #fff;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.slider-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.slider-btn.prev {
+  left: 0;
+}
+.slider-btn.next {
+  right: 0;
+}
+.slider-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* --- Pagination Dots (Updated) --- */
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5rem; /* Added slightly more space for a cleaner look */
+}
+
+.dot {
+  height: 9px;
+  width: 9px;
+  margin: 0 5px;
+  background-color: #d8d8d8; /* Light grey for inactive dots */
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.dot.active {
+  background-color: var(--primary-color); /* Solid blue for the active dot */
+}
+
+/* --- Responsive Tablet --- */
+@media (min-width: 768px) {
+  .review-slide {
+    flex-basis: 50%; /* 2 slides visible */
+  }
+}
+
+/* --- Responsive Desktop --- */
+@media (min-width: 1024px) {
+  .review-slide {
+    flex-basis: calc(100% / 3); /* 3 slides visible */
+  }
+}
