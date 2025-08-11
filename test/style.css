@@ -1,0 +1,16 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: blueviolet;
+}
+.container {
+  background-color: tomato;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100vh;
+  max-height: 100vh;
+}
